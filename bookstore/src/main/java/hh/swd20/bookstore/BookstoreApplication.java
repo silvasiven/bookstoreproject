@@ -27,6 +27,7 @@ public class BookstoreApplication {
 		log.info("save a couple of books");
 		bookRepository.save(new Book("Hauskimmat vitsit","Kari Kirjailija",55016,2017,40));
 		bookRepository.save(new Book("Anna mun arvata","Oona Kalervo",690582,2017,46));	
+		bookRepository.save(new Book("Sininen lintu","Oona Kalervo",690582,2007,76));	
 		
 		log.info("fetch all books");
 		for (Book book : bookRepository.findAll()) {

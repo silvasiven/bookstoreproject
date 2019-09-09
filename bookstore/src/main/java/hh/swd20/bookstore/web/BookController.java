@@ -1,24 +1,33 @@
 package hh.swd20.bookstore.web;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+
+import hh.swd20.bookstore.domain.Book;
+import hh.swd20.bookstore.domain.BookRepository;
 
 @Controller
 public class BookController {
 	
+	@Autowired
+	BookRepository bookRepository;
+	
 	@RequestMapping(value= "/index", method = RequestMethod.GET)
 	public String helloYou() {
 			return "index";
-}
-	//kirjojen listaus
-/*	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public List<Book> getCars(Model model) {
-		List<Book> books = new ArrayList<Book>(); // ei vielä haeta tietokannasta autoja -> luodaan tyhjä lista
-		books.add(new Book("Tesla","Kari Kirjailija",55016,2017,40));
-		books.add(new Book("Kingi","Oona Kalervo",690582,2017,46));
-		model.addAttribute("books", books); // välitetään autolista templatelle model-olion avulla
-		return "lista"; 
-	}*/
 
+
+}
+	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
+	public String getBooks(Model model) {
+			List<Book> books =  (List<Book>) bookRepository.findAll(); // haeta tietokannasta autot
+			model.addAttribute("books", books); // välitetään autolista templatelle model-olion avulla
+			return "booklist";
+	}
 }
