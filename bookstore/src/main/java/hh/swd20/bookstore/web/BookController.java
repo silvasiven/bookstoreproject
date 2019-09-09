@@ -11,8 +11,8 @@ public class BookController {
 	public String helloYou() {
 			return "index";
 }
-
-/*	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	//kirjojen listaus
+/*	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<Book> getCars(Model model) {
 		List<Book> books = new ArrayList<Book>(); // ei vielä haeta tietokannasta autoja -> luodaan tyhjä lista
 		books.add(new Book("Tesla","Kari Kirjailija",55016,2017,40));
