@@ -51,4 +51,16 @@ public String deleteBook(@PathVariable("id") Long bookId) {
 	bookRepository.deleteById(bookId);
 	return "redirect:../booklist";
 }
+//muokkaus
+@RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
+public String editBook(@PathVariable("id") Long bookId, Model title) {
+	title.addAttribute("book", bookRepository.findById(bookId));
+	return "editbook";	
+}
+
+@RequestMapping(value = "/editbook", method = RequestMethod.POST)
+public String updateBook(@ModelAttribute Book book) {
+	bookRepository.save(book);
+	return "redirect:/booklist";
+}
 }
