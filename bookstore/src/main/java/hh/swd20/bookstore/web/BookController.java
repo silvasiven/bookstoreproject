@@ -10,57 +10,56 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 import hh.swd20.bookstore.domain.Book;
 import hh.swd20.bookstore.domain.BookRepository;
+import hh.swd20.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	
 	@Autowired
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
-	@RequestMapping(value= "/index", method = RequestMethod.GET)
-	public String helloYou() {
-			return "index";
+	
 
-}
-	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
-	public String getBooks(Model model) {
-			List<Book> books =  (List<Book>) bookRepository.findAll(); // haeta tietokannasta autot
-			model.addAttribute("books", books); // välitetään autolista templatelle model-olion avulla
-			return "booklist";
+	// kaikki kirjat listalla
+	@RequestMapping(value="/booklist")
+	public String listBook(Model model) {
+		model.addAttribute("books", bookRepository.findAll());
+		return "booklist";
 	}
+	
+	
+	// lisää uuden kirjan
+	@RequestMapping(value="/add")
+	public String addBook(Model model) {
+		model.addAttribute("book", new Book());
+		model.addAttribute("categories", categoryRepository.findAll());
+		return "addbook";
+	}
+	
+	// tallentaa uuden kirjan/päivittää muuttuneet tiedot
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	public String save(Book book) {
+		bookRepository.save(book);
+		return "redirect:booklist";
+	}
+	
 
-// tyhjän lomakkeen muodostaminen
-@RequestMapping(value = "/newbook", method = RequestMethod.GET)
-public String getNewBookForm(Model model) {
-	model.addAttribute("book", new Book()); // "tyhjä" auto-olio
-	return "bookform";
-}
-
-//lomakkeella syötettyjen tietojen vastaanotto ja tallennus
-@RequestMapping(value = "/newbook", method = RequestMethod.POST)
-public String saveBook(@ModelAttribute Book book) {
-	bookRepository.save(book);
-	return "redirect:/booklist";
-}
-
-// poisto
-@RequestMapping(value = "/deletebook/{id}", method = RequestMethod.GET)
-public String deleteBook(@PathVariable("id") Long bookId) {
-	bookRepository.deleteById(bookId);
-	return "redirect:../booklist";
-}
-//muokkaus
-@RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
-public String editBook(@PathVariable("id") Long bookId, Model title) {
-	title.addAttribute("book", bookRepository.findById(bookId));
-	return "editbook";	
-}
-
-@RequestMapping(value = "/editbook", method = RequestMethod.POST)
-public String updateBook(@ModelAttribute Book book) {
-	bookRepository.save(book);
-	return "redirect:/booklist";
-}
+	// poisto
+	@RequestMapping(value = "/deletebook/{id}", method = RequestMethod.GET)
+	public String deleteBook(@PathVariable("id") Long bookId) {
+		bookRepository.deleteById(bookId);
+		return "redirect:../booklist";
+	}
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+	public String editBook(@PathVariable("id") Long bookId, Model model) {
+		model.addAttribute("book", bookRepository.findById(bookId));
+		model.addAttribute("categories", categoryRepository.findAll());
+		return "editbook";
+	}
+	
 }
