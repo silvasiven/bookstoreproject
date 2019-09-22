@@ -31,9 +31,9 @@ public class BookstoreApplication {
 		categoryRepository.save(new Category("Biography"));
 		categoryRepository.save(new Category("Fiction"));
 		
-		bookRepository.save(new Book("Hauskimmat vitsit","Kari Kirjailija",55016,2017,40, categoryRepository.findByName("Horror").get(0)));
-		bookRepository.save(new Book("Anna mun arvata","Oona Kalervo",690582,2017,46, categoryRepository.findByName("Biography").get(0)));	
-		bookRepository.save(new Book("Sininen lintu","Oona Kalervo",690582,2007,76, categoryRepository.findByName("Fiction").get(0)));	
+		bookRepository.save(new Book("Hauskimmat vitsit","Kari Kirjailija","55016",2017,40, categoryRepository.findByName("Horror").get(0)));
+		bookRepository.save(new Book("Anna mun arvata","Oona Kalervo","690582",2017,46, categoryRepository.findByName("Biography").get(0)));	
+		bookRepository.save(new Book("Sininen lintu","Oona Kalervo","690582",2007,76, categoryRepository.findByName("Fiction").get(0)));	
 		
 		log.info("fetch all books");
 		for (Book book : bookRepository.findAll()) {

@@ -16,9 +16,9 @@ public class Book {
 	private Long id; 
 	private String title;
 	private String author;
-	private int isbn;
+	private String isbn;
 	private int year;
-	private int price;
+	private double price;
 	
 	 @ManyToOne
 	 @JoinColumn(name = "categoryid")
@@ -27,7 +27,7 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(Long id, String title, String author, int isbn, int year, int price, Category category) {
+	public Book(Long id, String title, String author, String isbn, int year, double price, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -37,7 +37,7 @@ public class Book {
 		this.price = price;
 		this.category = category;
 	}
-	public Book(String title, String author, int isbn, int year, int price,Category category) {
+	public Book(String title, String author, String isbn, int year, double price,Category category) {
 		super();
 		this.title = title;
 		this.author = author;
@@ -70,11 +70,11 @@ public class Book {
 		this.title = title;
 	}
 
-	public int getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(int isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
@@ -86,7 +86,7 @@ public class Book {
 		this.year = year;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
