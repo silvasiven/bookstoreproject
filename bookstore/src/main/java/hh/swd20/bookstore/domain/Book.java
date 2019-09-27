@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import hh.swd20.bookstore.domain.Category;
 
 @Entity
@@ -21,6 +23,7 @@ public class Book {
 	private double price;
 	
 	 @ManyToOne
+	 @JsonIgnore
 	 @JoinColumn(name = "categoryid")
 	    private Category category;
 
@@ -90,7 +93,7 @@ public class Book {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
