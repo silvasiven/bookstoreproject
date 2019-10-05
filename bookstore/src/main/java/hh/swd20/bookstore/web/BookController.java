@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +22,12 @@ public class BookController {
 	private BookRepository bookRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	// login
+		@RequestMapping(value="/login")
+		public String login() {
+			return "login";
+		}
 	
 	//REST kaikki kirjat
 	@RequestMapping(value="/books", method = RequestMethod.GET)
@@ -62,8 +67,8 @@ public class BookController {
 	
 
 	// poisto
-	@RequestMapping(value = "/deletebook/{id}", method = RequestMethod.GET)
-	public String deleteBook(@PathVariable("id") Long bookId) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 		bookRepository.deleteById(bookId);
 		return "redirect:../booklist";
 	}
@@ -74,5 +79,6 @@ public class BookController {
 		model.addAttribute("categories", categoryRepository.findAll());
 		return "editbook";
 	}
+
 	
 }
